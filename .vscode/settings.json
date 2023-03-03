@@ -25,5 +25,5 @@
   // 拼写检查
   "cSpell.enableFiletypes": [],
   // 豁免单词
-  "cSpell.words": ["nestjs", "Parens"]
+  "cSpell.words": ["amap", "nestjs", "Parens"]
 }
