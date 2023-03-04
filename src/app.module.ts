@@ -2,8 +2,9 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { configValidation } from './config/config.validation';
-import { CommonConfigRegister } from './config/registers/common.register';
+import { configValidation } from './modules/config/config.validation';
+import { CommonConfigRegister } from './modules/config/registers/common.register';
+import { PoiModule } from './modules/poi/poi.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { CommonConfigRegister } from './config/registers/common.register';
       validationOptions: { allowUnknown: true, abortEarly: true },
       load: [CommonConfigRegister],
     }),
+    PoiModule,
   ],
   controllers: [AppController],
   providers: [AppService],

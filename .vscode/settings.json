@@ -25,5 +25,19 @@
   // 拼写检查
   "cSpell.enableFiletypes": [],
   // 豁免单词
-  "cSpell.words": ["amap", "nestjs", "Parens"]
+  "cSpell.words": [
+    "adcode",
+    "adname",
+    "amap",
+    "citycode",
+    "cityname",
+    "dtos",
+    "infocode",
+    "metatype",
+    "nestjs",
+    "Parens",
+    "pcode",
+    "pois",
+    "typecode"
+  ]
 }
