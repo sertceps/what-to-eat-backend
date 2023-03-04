@@ -5,6 +5,21 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { CommonConfigRegister } from './modules/config/registers/common.register';
 import * as colors from 'ansi-colors';
+import { networkInterfaces } from 'os';
+
+function getIpList() {
+  const nets = networkInterfaces();
+  const ipList = [];
+  Object.keys(nets)
+    .filter(netKey => !netKey.startsWith('br') && !netKey.startsWith('lo'))
+    .forEach(netKey => {
+      ipList.push(
+        ...nets[netKey].filter(netVal => netVal.family === 'IPv4' && !netVal.internal).map(netVal => netVal.address),
+      );
+    });
+
+  return ipList;
+}
 
 async function bootstrap() {
   const app = await createApp();
@@ -33,7 +48,15 @@ async function bootstrap() {
   async function listen() {
     const commonConfig = app.select(AppModule).get<ConfigType<typeof CommonConfigRegister>>(CommonConfigRegister.KEY);
     await app.listen(commonConfig.port);
-    console.log(colors.blue(`[Listening]: http://localhost:${commonConfig.port}`));
+    logIpInfo(commonConfig.port);
+  }
+
+  function logIpInfo(port: number) {
+    const ipList = getIpList();
+    ipList.forEach(ip => {
+      console.log(colors.blue(`[Maybe Listening]: http://127.0.0.1:${port}`));
+      console.log(colors.blue(`[Maybe Listening]: http://${ip}:${port}`));
+    });
   }
 }
 bootstrap();
